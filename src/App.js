@@ -1,7 +1,10 @@
+import React from 'react'
+import VideoPlayer from './videoplayer'
+
 function App() {
   return (
     <div>
-      App
+      <VideoPlayer />
     </div>
   );
 }
