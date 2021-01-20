@@ -36,12 +36,13 @@ function VideoPlayer() {
 		volume: 1,
 		loop: false,
 		seeking: false,
+		fullscreen: false,
 	});
 
 	const playerRef = useRef(null);
 	const playerContainerRef = useRef(null);
 	const controlsRef = useRef(null);
-	const { playing, controls, light, muted, loop, playbackRate, pip, played, seeking, volume } = state;
+	const { playing, controls, light, muted, loop, playbackRate, pip, played, seeking, volume, fullscreen } = state;
 
 	const handlePlayPause = () => {
 		setState({ ...state, playing: !state.playing });
@@ -102,6 +103,7 @@ function VideoPlayer() {
 
 	const toggleFullScreen = () => {
 		screenful.toggle(playerContainerRef.current);
+		setState({ ...state, fullscreen: !state.fullscreen });
 	};
 
 	const handleMouseMove = () => {
@@ -173,6 +175,7 @@ function VideoPlayer() {
 				onPlaybackRateChange={handlePlaybackRate}
 				onToggleFullScreen={toggleFullScreen}
 				volume={volume}
+				fullscreen={fullscreen}
 				videoDetails={
 					<div>
 						<div className='video-title'>Big Buck Bunny</div>

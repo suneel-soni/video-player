@@ -39,7 +39,9 @@ const Controls = forwardRef(
 			onToggleFullScreen,
 			volume,
 			onVolumeChange,
+			fullscreen,
 			videoDetails,
+			playNextChapter,
 		},
 		ref
 	) => {
@@ -57,6 +59,7 @@ const Controls = forwardRef(
 		return (
 			<div ref={ref} className='controls-wrapper'>
 				<div className='video-details-container'>{videoDetails}</div>
+				<div onClick={onPlayPause} className='play-pouse-video' />
 				<div className='controls-container'>
 					<div className='progress-wrapper'>
 						<span className='video-duration' style={{ marginRight: 5 }}>
@@ -76,26 +79,28 @@ const Controls = forwardRef(
 							{remainingTime} {/* {totalDuration} */}
 						</span>
 					</div>
-					<div className='controls-icons_wrapper'>
-						<div className='left_section'>
-							{playing ? <PauseOutlined onClick={onPlayPause} className='controls-icon play-pause-icon' /> : <CaretRightOutlined onClick={onPlayPause} className='controls-icon play-pause-icon' />}
-							<span className='valume-wrapper'>
-								{muted ? <SoundFilled onClick={onMute} className='controls-icon valume-icon' /> : <SoundOutlined onClick={onMute} className='controls-icon valume-icon' />}
-								<Slider
-									min={0}
-									max={100}
-									value={muted ? 0 : volume * 100}
-									onChange={onVolumeChange}
-									onMouseDown={onSeekMouseDown}
-									onAfterChange={onVolumeSeekDown}
-									defaultValue={100}
-									tooltipVisible={false}
-									vertical={false}
-								/>
-							</span>
-							<span className='speed-rate-wrapper'>
-								<img src={MeterIcon} alt='' className='controls-icon meter-icon' />
-								<span className='controls-text'>Speed ({playbackRate}x)</span>
+
+					<div className='player-controls'>
+						<div className='left-section'>
+							<button>{playing ? <PauseOutlined onClick={onPlayPause} /> : <CaretRightOutlined onClick={onPlayPause} />}</button>
+							<button className='value-control-button'>
+								{muted ? <SoundFilled onClick={onMute} /> : <SoundOutlined onClick={onMute} />}
+								<div className='valume-control'>
+									<Slider
+										min={0}
+										max={100}
+										value={muted ? 0 : volume * 100}
+										onChange={onVolumeChange}
+										onMouseDown={onSeekMouseDown}
+										onAfterChange={onVolumeSeekDown}
+										defaultValue={100}
+										tooltipVisible={false}
+										vertical={true}
+									/>
+								</div>
+							</button>
+							<button className='speedometer-button'>
+								<img src={MeterIcon} alt='' className='svg-icon-image' />
 								<div className='speed-rate-container'>
 									<ul>
 										{[0.5, 1, 1.5, 2].map(rate => (
@@ -105,29 +110,31 @@ const Controls = forwardRef(
 										))}
 									</ul>
 								</div>
-							</span>
-							<span onClick={onRewind} className='controls-icon svg-icons'>
-								<img src={RewindIcon} alt='' className='rewind-icon' />
+							</button>
+							<div className='info-text-container'>
+								<span className='controls-text'>Speed ({playbackRate}x)</span>
+							</div>
+							<button onClick={onRewind} className='rewind-forward-button'>
+								<img src={RewindIcon} alt='' className='svg-icon-image rewind-forward-icon' />
 								<span className='caption'>10</span>
-							</span>
-							<span onClick={onFastForward} className='controls-icon svg-icons'>
-								<img src={ForwardIcon} alt='' className='forward-icon' />
+							</button>
+							<button onClick={onFastForward} className='rewind-forward-button'>
+								<img src={ForwardIcon} alt='' className='svg-icon-image rewind-forward-icon' />
 								<span className='caption'>10</span>
-							</span>
+							</button>
 						</div>
-						<div className='middle_section'>
-							<div className='controls-icon play-next'>
+						<div className='middle-section'>
+							<div onClick={playNextChapter} className='next-chapter-button'>
 								<StepForwardOutlined />
-								<span className='controls-text'>Next Video</span>
+								<span className='controls-text'>Next Chapter</span>
 							</div>
 						</div>
-						<div className='right_section'>
-                            <div className='video-quality'>
-                                <span className='quality-badge'>HD</span>
-                                <span className='controls-text'>Quality</span>
-                            </div>
-							<FullscreenOutlined onClick={onToggleFullScreen} className='controls-icon screen-icon' />
-							{/* <FullscreenExitOutlined onClick={onToggleFullScreen} className='controls-icon screen-icon' /> */}
+						<div className='right-section'>
+							<div className='video-quality-button'>
+								<span className='quality-badge'>HD</span>
+								<span className='controls-text'>Quality</span>
+							</div>
+							<button onClick={onToggleFullScreen}>{fullscreen ? <FullscreenExitOutlined /> : <FullscreenOutlined />}</button>
 						</div>
 					</div>
 				</div>
@@ -154,6 +161,7 @@ Controls.propTypes = {
 	totalDuration: PropTypes.string,
 	muted: PropTypes.bool,
 	playbackRate: PropTypes.number,
+	fullscreen: PropTypes.bool,
 };
 
 export default Controls;

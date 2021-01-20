@@ -20,10 +20,11 @@ $transition: all 0.4s ease-in-out;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
-		padding: 20px;
+		// padding: 20px;
 	}
 	.video-details-container {
 		color: $white;
+		padding: 1.5em;
 		.video-title {
 			color: inherit;
 			font-size: 20px;
@@ -40,11 +41,15 @@ $transition: all 0.4s ease-in-out;
 			margin-top: 15px;
 		}
 	}
+	.play-pouse-video {
+		height: 100%;
+	}
 	.progress-wrapper {
 		display: grid;
 		grid-template-columns: auto 1fr auto;
 		align-items: center;
 		gap: 15px;
+		padding: 0.5em 1em;
 	}
 	.video-duration {
 		color: $white;
@@ -53,109 +58,31 @@ $transition: all 0.4s ease-in-out;
 		font-weight: 400;
 		font-style: normal;
 	}
-	.controls-icons_wrapper {
-		display: grid;
-		grid-template-columns: 2fr 1fr 1fr;
+
+	.left-section {
+		display: flex;
+		flex-direction: row;
 		align-items: center;
 		justify-content: space-between;
-		color: $white;
-		margin-top: 15px;
+		flex: 2;
 	}
-
-	.left_section {
+	.middle-section {
 		display: flex;
 		flex-direction: row;
 		align-items: center;
-		justify-self: flex-start;
+		justify-content: center;
+		flex: auto;
 	}
-	.middle_section {
+	.right-section {
 		display: flex;
 		flex-direction: row;
 		align-items: center;
-		justify-self: flex-start;
-
-		svg {
-			margin-right: 5px;
-		}
-	}
-	.right_section {
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-		justify-self: flex-end;
+		justify-content: flex-end;
+		flex: auto;
 	}
 
 	.pointer {
 		cursor: pointer;
-	}
-
-	.controls-icon {
-		font-size: 24px;
-		width: 24px;
-		transition: $transition;
-		@extend .pointer;
-		img {
-			width: 24px;
-		}
-		&:hover {
-			transform: scale(1.2);
-		}
-	}
-
-	.svg-icons {
-		display: flex;
-		align-items: center;
-		position: relative;
-		margin-left: 30px;
-		@extend .pointer;
-
-		.caption {
-			position: absolute;
-			font-size: 12px;
-			top: 8px;
-			left: 5px;
-			right: 0;
-		}
-	}
-	.controls-text {
-		font-size: 14px;
-		line-height: 20px;
-		font-style: normal;
-        font-weight: 600;
-        transition: $transition;
-        transition-property: opacity;
-	}
-	.play-next {
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-        margin-left: 20px;
-		width: fit-content;
-        @extend .pointer;
-	}
-	.valume-wrapper {
-		margin-right: 35px;
-		width: 110px;
-		.ant-slider {
-			margin-left: 35px;
-			margin-top: 5px;
-		}
-	}
-	.valume-icon {
-		margin-right: 20px;
-		float: left;
-	}
-	.play-pause-icon {
-		margin-right: 30px;
-	}
-	.play-pause-icon,
-	.screen-icon {
-		display: flex;
-		align-items: center;
-	}
-
-	.meter-icon {
-		margin-right: 12px;
 	}
 
 	.ant-slider {
@@ -178,108 +105,216 @@ $transition: all 0.4s ease-in-out;
 			border-color: $color;
 		}
 	}
-	.speed-rate-wrapper {
-		position: relative;
-		transition: $transition;
-		min-width: 115px;
 
-		.speed-rate-container {
-			background-color: rgba(0, 0, 0, 0.8);
-			border: 1px solid rgba(255, 255, 255, 0.2);
-			border-radius: 6px;
+	.player-controls {
+		display: flex;
+		justify-content: center;
+		-webkit-align-items: center;
+		-moz-align-items: center;
+		-ms-align-items: center;
+		-o-align-items: center;
+		align-items: center;
+		-webkit-box-align: center;
+		-moz-box-align: center;
+		-webkit-box-pack: center;
+		-moz-box-pack: center;
+		justify-content: space-between;
+		padding: 0.5em 0;
+	}
+
+	.zoom-controls {
+		transform: scale(1.2);
+	}
+
+	button {
+		background: transparent;
+		box-sizing: border-box;
+		border: 0px transparent;
+		color: $white;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 2.5em;
+		position: relative;
+		min-width: 1.5em;
+		height: 1.5em;
+		padding: 0.25em 0.3em;
+		outline: none;
+		transition: $transition;
+		@extend .pointer;
+	}
+	.value-control-button {
+		font-size: 2em;
+		.valume-control {
+			background: #272727;
 			position: absolute;
 			bottom: 100%;
-			left: -12px;
-			transition: $transition;
+			display: none;
 			opacity: 0;
-			height: 0;
+			padding: 15px 10px;
+			border-radius: 5px;
 			overflow: hidden;
+			transition: $transition;
+
+			.ant-slider-vertical,
+			.ant-slider-rail {
+				height: 80px;
+			}
+		}
+
+		&:hover .valume-control {
+			display: block;
+			opacity: 1;
+		}
+	}
+	.speedometer-button {
+		.speed-rate-container {
+			background: #272727;
+			position: absolute;
+			opacity: 0;
+			bottom: 100%;
+			border-radius: 5px;
 
 			ul {
 				margin: 0;
 				padding: 0;
 				list-style: none;
-				li {
-					padding: 5px 10px;
-					font-size: 14px;
-                    color: $white;
-                    font-weight: 500;
-					width: fit-content;
-					transition: $transition;
-					@extend .pointer;
-
-					&:hover {
-						color: $color;
-					}
-				}
 			}
 
-			.speed-rate-active {
-				color: $color;
+			li {
+				font-size: 14px;
+				font-weight: 700;
+				color: $white;
+				padding: 10px;
+				transition: $transition;
+				@extend .pointer;
+
+				&:hover {
+					color: $color;
+				}
+
+				.speed-rate-active {
+					color: $color;
+				}
 			}
 		}
 
 		&:hover .speed-rate-container {
-			height: auto;
 			opacity: 1;
 		}
 	}
-
-	.video-quality {
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-		margin-right: 30px;
+	.info-text-container {
+		font-size: 14px;
+		font-weight: 700;
+		color: $white;
+		padding: 0.25em 0.3em;
+		min-width: 95px;
+		text-align: center;
 		transition: $transition;
-
-		&:hover {
-			.quality-badge {
-				transform: scale(1.2);
-			}
+		transition-property: min-width;
+	}
+	.rewind-forward-button {
+		.caption {
+			position: absolute;
+			font-size: 12px;
+			font-weight: 700;
+			top: 20px;
+			left: 0;
+			right: 0;
 		}
 	}
-	.quality-badge {
-		background: $white;
-		border-radius: 2px;
-		color: #575656;
-		display: inline-block;
-		font-size: 12px;
-		line-height: 14px;
-		font-style: normal;
+	.svg-icon-image {
+		width: 32px;
+	}
+	.rewind-forward-icon {
+		width: 28px;
+	}
+	.next-chapter-button {
+		display: flex;
+		align-items: center;
+		font-size: 1em;
 		font-weight: 700;
-		padding-top: 3px;
-		margin-right: 8px;
-		text-align: center;
-		width: 25px;
-        height: 18px;
-        transition: $transition;
+		color: $white;
+		padding: 0.25em 0.3em;
+		transition: $transition;
 		@extend .pointer;
+
+		svg {
+			font-size: 2.5em;
+		}
+	}
+	.video-quality-button {
+		margin-right: 20px;
+		.quality-badge {
+			background: $white;
+			border-radius: 2px;
+			color: #575656;
+			display: inline-block;
+			font-size: 12px;
+			line-height: 14px;
+			font-style: normal;
+			font-weight: 700;
+			padding-top: 3px;
+			margin-right: 8px;
+			text-align: center;
+			width: 25px;
+			height: 18px;
+			transition: $transition;
+			@extend .pointer;
+		}
+	}
+	.controls-text {
+		color: $white;
+		font-size: 14px;
+		line-height: 20px;
+		font-style: normal;
+		font-weight: 600;
+		transition: $transition;
+		transition-property: opacity;
+	}
+
+	button:hover,
+	.next-chapter-button:hover,
+	.quality-badge:hover {
+		transform: scale(1.2);
 	}
 
 	@media only screen and (max-width: 768px) {
-        .middle_section {
-            justify-self: center;
-        }
+		.middle_section {
+			justify-self: center;
+		}
 		.controls-wrapper {
-			padding: 10px;
+			padding: 0px;
 		}
-		.play-pause-icon {
-			margin-right: 10px;
+		
+		button,
+		.next-chapter-button svg {
+			font-size: 2em;
 		}
-		.valume-wrapper {
-			margin-right: 30px;
+		.value-control-button {
+			font-size: 1.8em;
 		}
-		.svg-icons {
-			margin-left: 10px;
+
+		.svg-icon-image {
+			width: 28px;
 		}
+
+		.svg-icon-image {
+			width: 24px;
+		}
+		.rewind-forward-button {
+			.caption {
+				top: 15px;
+			}
+		}
+
+		.info-text-container,
 		.controls-text {
 			display: none;
 			opacity: 0;
 		}
-		.speed-rate-wrapper {
-			min-width: fit-content;
-		}
 		.video-details-container {
+			padding: 1em;
 			.video-title {
 				font-size: 16px;
 				line-height: 19px;
@@ -290,11 +325,8 @@ $transition: all 0.4s ease-in-out;
 				margin-top: 10px;
 			}
 		}
-		.controls-icon {
-			transform: scale(0.9);
-			img {
-				transform: scale(0.9);
-			}
+		.video-quality-button {
+			margin-right: 10px;
 		}
 	}
 }
